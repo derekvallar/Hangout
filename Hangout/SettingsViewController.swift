@@ -44,8 +44,8 @@ extension SettingsViewController: GMSAutocompleteResultsViewControllerDelegate {
         searchController?.isActive = false
         // Do something with the selected place.
         print("Place name: ", place.name)
-        print("Place address: ", place.formattedAddress)
-        print("Place attributions: ", place.attributions)
+        print("Place address: ", place.formattedAddress ?? "")
+        print("Place attributions: ", place.attributions ?? "")
     }
 
     func resultsController(_ resultsController: GMSAutocompleteResultsViewController,

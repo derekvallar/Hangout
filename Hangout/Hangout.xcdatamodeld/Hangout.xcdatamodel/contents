@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11542" systemVersion="16B2555" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Group" representedClassName="Group" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="hangouts" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Hangout" inverseName="group" inverseEntity="Hangout" syncable="YES"/>
+        <relationship name="members" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="User" inverseName="groups" inverseEntity="User" syncable="YES"/>
+    </entity>
+    <entity name="Hangout" representedClassName="Hangout" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Group" inverseName="hangouts" inverseEntity="Group" syncable="YES"/>
+    </entity>
+    <entity name="User" representedClassName="User" syncable="YES">
+        <attribute name="firstname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lastname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="picture" optional="YES" attributeType="Binary" allowsExternalBinaryDataStorage="YES" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="groups" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Group" inverseName="members" inverseEntity="Group" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Group" positionX="-470" positionY="-27" width="128" height="90"/>
+        <element name="Hangout" positionX="-360" positionY="18" width="128" height="75"/>
+        <element name="User" positionX="-243" positionY="-18" width="128" height="135"/>
+    </elements>
+</model>

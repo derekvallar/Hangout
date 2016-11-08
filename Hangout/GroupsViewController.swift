@@ -14,10 +14,11 @@ class GroupsViewController: UITableViewController {
     @IBOutlet weak var AddGroupButton: UIBarButtonItem!
 
     let searchController = UISearchController(searchResultsController: nil)
-    var groups:[Group] = groupList
     var filteredGroups:[Group] = [Group]()
+    var groupList:[Group] = [Group]()
 
     override func viewDidLoad() {
+        print("ViewDidLoad()")
         super.viewDidLoad()
 
         searchController.searchResultsUpdater = self
@@ -28,6 +29,25 @@ class GroupsViewController: UITableViewController {
         self.navigationItem.titleView = searchController.searchBar
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        print("ViewDidAppear()")
+
+        getGroupData()
+        tableView.reloadData()
+        print(groupList)
+    }
+
+    func getGroupData() {
+        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+
+        do {
+            groupList = try context.fetch(Group.fetchRequest())
+        }
+        catch {
+            print("Fetching Group data failed.")
+        }
+    }
+
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -36,18 +56,18 @@ class GroupsViewController: UITableViewController {
         if searchController.isActive && searchController.searchBar.text != "" {
             return filteredGroups.count
         }
-        return groups.count
+        return groupList.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HangoutGroupCell", for: indexPath)
-            as! HangoutGroupCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GroupTableCell", for: indexPath)
+            as! GroupTableCell
 
         let group: Group
         if searchController.isActive && searchController.searchBar.text != "" {
             group = filteredGroups[indexPath.row]
         } else {
-            group = groups[indexPath.row]
+            group = groupList[indexPath.row]
         }
         cell.group = group
 
@@ -58,16 +78,18 @@ class GroupsViewController: UITableViewController {
 extension GroupsViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let text = searchController.searchBar.text!
-        filteredGroups = groups.filter({ (i: Group) -> Bool in
-            if i.name!.localizedCaseInsensitiveContains(text) {
-                return true
-            }
+        filteredGroups = groupList.filter({ (i: Group) -> Bool in
 
-            for name in i.members! {
-                if name.localizedCaseInsensitiveContains(text) {
+            for user in i.members?.allObjects as! [User] {
+                if user.firstname!.localizedCaseInsensitiveContains(text) {
+                    return true
+                }
+
+                if user.username!.localizedCaseInsensitiveContains(text) {
                     return true
                 }
             }
+
             return false
         })
 
