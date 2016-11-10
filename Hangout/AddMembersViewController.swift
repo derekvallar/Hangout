@@ -19,7 +19,6 @@ class AddMembersViewController: UITableViewController {
 
     @IBAction func DoneButton(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
-
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let group = Group(context: context)
         group.initData(selectedUsers)
@@ -44,11 +43,8 @@ class AddMembersViewController: UITableViewController {
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        print("ViewDidAppear()")
-
         getUserData()
         tableView.reloadData()
-        print(userList)
     }
 
     func getUserData() {
@@ -100,8 +96,6 @@ class AddMembersViewController: UITableViewController {
             cell.check = true
 
             selectedUsers.append(cell.user)
-
-            print(selectedUsers)
         }
         else {
             cell.accessoryView = nil
@@ -109,7 +103,6 @@ class AddMembersViewController: UITableViewController {
 
             let user = cell.user!
             selectedUsers = selectedUsers.filter() { $0 != user }
-            print(selectedUsers)
         }
 
         cell.isSelected = false
@@ -130,7 +123,6 @@ extension AddMembersViewController: UISearchResultsUpdating {
             return false
         })
 
-        print(filteredUsers)
         tableView.reloadData()
     }
 }

@@ -25,11 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         FBSDKApplicationDelegate().application(application, didFinishLaunchingWithOptions: launchOptions)
 
-        print("did finish launching")
-
         let userDefaults = UserDefaults.standard
         if (!userDefaults.bool(forKey: "initLaunch")) {
-            print("first app launch")
             userDefaults.set(true, forKey: "initLaunch")
 
             let context = persistentContainer.viewContext
@@ -60,9 +57,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             user4.username = "jayquelin"
 
             saveContext()
-        }
-        else {
-            print("huhuh")
         }
 
         return true

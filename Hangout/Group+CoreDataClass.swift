@@ -15,6 +15,7 @@ public class Group: NSManagedObject {
     func initData(_ members: [User]) {
         addToMembers(NSSet.init(array: members))
         updateDefaultName()
+        uniqueID = UUID().uuidString
     }
 
     func updateDefaultName() {
@@ -39,9 +40,6 @@ public class Group: NSManagedObject {
             }
 
             name = nameList.joined(separator: ", ")
-            print(name!)
-            print(currCharacters)
-
             if (currCharacters > maxCharacters) {
                 let index = name?.index((name?.startIndex)!, offsetBy: maxCharacters)
                 name = name?.substring(to: index!)
@@ -51,4 +49,9 @@ public class Group: NSManagedObject {
         }
     }
 
+    @nonobjc public class func fetchRequest(_ uuid: String?) -> NSFetchRequest<Group> {
+        let request = NSFetchRequest<Group>(entityName: "Group")
+        request.predicate = NSPredicate(format: "uniqueID == %@", uuid!)
+        return request
+    }
 }

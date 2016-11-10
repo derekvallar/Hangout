@@ -100,8 +100,6 @@ extension RecommendationViewController: CLLocationManagerDelegate {
             resultsViewController?.autocompleteBounds = GMSCoordinateBounds(coordinate: visibleRegion.farLeft, coordinate: visibleRegion.nearRight)
 
             locationManager.stopUpdatingLocation()
-
-            print("Updated location")
         }
     }
 }

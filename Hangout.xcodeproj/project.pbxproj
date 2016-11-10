@@ -15,13 +15,15 @@
 		D012E5A31DCBD7A900066C94 /* Hangout.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D012E5A11DCBD7A900066C94 /* Hangout.xcdatamodeld */; };
 		D029D8351DB05A4900A79CFC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029D8341DB05A4900A79CFC /* AppDelegate.swift */; };
 		D029D8371DB05A4900A79CFC /* RecommendationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029D8361DB05A4900A79CFC /* RecommendationViewController.swift */; };
-		D029D8391DB05A4900A79CFC /* GroupsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029D8381DB05A4900A79CFC /* GroupsViewController.swift */; };
+		D029D8391DB05A4900A79CFC /* GroupListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029D8381DB05A4900A79CFC /* GroupListViewController.swift */; };
 		D029D83C1DB05A4900A79CFC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D029D83A1DB05A4900A79CFC /* Main.storyboard */; };
 		D029D83E1DB05A4900A79CFC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D029D83D1DB05A4900A79CFC /* Assets.xcassets */; };
 		D029D8411DB05A4900A79CFC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D029D83F1DB05A4900A79CFC /* LaunchScreen.storyboard */; };
 		D029D84A1DB05B8C00A79CFC /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D029D8491DB05B8C00A79CFC /* SettingsViewController.swift */; };
 		D048FFA81DC8683800822BF4 /* AddMembersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048FFA71DC8683800822BF4 /* AddMembersViewController.swift */; };
 		D048FFAC1DC9458800822BF4 /* UserTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D048FFAB1DC9458800822BF4 /* UserTableCell.swift */; };
+		D05E84F91DD31851004477C9 /* HangoutTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05E84F81DD31851004477C9 /* HangoutTableCell.swift */; };
+		D09254CB1DD28AFC009C6F97 /* GroupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09254CA1DD28AFC009C6F97 /* GroupViewController.swift */; };
 		D0A36E181DD12C8100D5F648 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A36E171DD12C8100D5F648 /* Bolts.framework */; };
 		D0A36E1F1DD1AFFE00D5F648 /* Hangout+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A36E191DD1AFFE00D5F648 /* Hangout+CoreDataClass.swift */; };
 		D0A36E201DD1AFFE00D5F648 /* Hangout+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A36E1A1DD1AFFE00D5F648 /* Hangout+CoreDataProperties.swift */; };
@@ -45,7 +47,7 @@
 		D029D8311DB05A4900A79CFC /* Hangout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hangout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D029D8341DB05A4900A79CFC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D029D8361DB05A4900A79CFC /* RecommendationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommendationViewController.swift; sourceTree = "<group>"; };
-		D029D8381DB05A4900A79CFC /* GroupsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewController.swift; sourceTree = "<group>"; };
+		D029D8381DB05A4900A79CFC /* GroupListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupListViewController.swift; sourceTree = "<group>"; };
 		D029D83B1DB05A4900A79CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D029D83D1DB05A4900A79CFC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D029D8401DB05A4900A79CFC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -53,6 +55,8 @@
 		D029D8491DB05B8C00A79CFC /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		D048FFA71DC8683800822BF4 /* AddMembersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddMembersViewController.swift; sourceTree = "<group>"; };
 		D048FFAB1DC9458800822BF4 /* UserTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserTableCell.swift; sourceTree = "<group>"; };
+		D05E84F81DD31851004477C9 /* HangoutTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HangoutTableCell.swift; sourceTree = "<group>"; };
+		D09254CA1DD28AFC009C6F97 /* GroupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GroupViewController.swift; sourceTree = "<group>"; };
 		D0A36E171DD12C8100D5F648 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		D0A36E191DD1AFFE00D5F648 /* Hangout+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hangout+CoreDataClass.swift"; sourceTree = "<group>"; };
 		D0A36E1A1DD1AFFE00D5F648 /* Hangout+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Hangout+CoreDataProperties.swift"; sourceTree = "<group>"; };
@@ -93,10 +97,10 @@
 		D0025AFB1DB9B60E008C8A54 /* Groups Tab */ = {
 			isa = PBXGroup;
 			children = (
-				D029D8381DB05A4900A79CFC /* GroupsViewController.swift */,
-				D048FFA71DC8683800822BF4 /* AddMembersViewController.swift */,
-				D048FFAB1DC9458800822BF4 /* UserTableCell.swift */,
+				D029D8381DB05A4900A79CFC /* GroupListViewController.swift */,
 				D0025AF31DB9954B008C8A54 /* GroupTableCell.swift */,
+				D05E84FA1DD31874004477C9 /* Group Hangouts */,
+				D09254CD1DD2F9E2009C6F97 /* AddMembers */,
 			);
 			name = "Groups Tab";
 			sourceTree = "<group>";
@@ -144,6 +148,24 @@
 				D029D8421DB05A4900A79CFC /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D05E84FA1DD31874004477C9 /* Group Hangouts */ = {
+			isa = PBXGroup;
+			children = (
+				D09254CA1DD28AFC009C6F97 /* GroupViewController.swift */,
+				D05E84F81DD31851004477C9 /* HangoutTableCell.swift */,
+			);
+			name = "Group Hangouts";
+			sourceTree = "<group>";
+		};
+		D09254CD1DD2F9E2009C6F97 /* AddMembers */ = {
+			isa = PBXGroup;
+			children = (
+				D048FFA71DC8683800822BF4 /* AddMembersViewController.swift */,
+				D048FFAB1DC9458800822BF4 /* UserTableCell.swift */,
+			);
+			name = AddMembers;
 			sourceTree = "<group>";
 		};
 		D0BC5FA51DD04F4800C523BD /* Core Data */ = {
@@ -302,11 +324,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09254CB1DD28AFC009C6F97 /* GroupViewController.swift in Sources */,
 				D0A36E1F1DD1AFFE00D5F648 /* Hangout+CoreDataClass.swift in Sources */,
 				D0A36E221DD1AFFE00D5F648 /* Group+CoreDataProperties.swift in Sources */,
+				D05E84F91DD31851004477C9 /* HangoutTableCell.swift in Sources */,
 				D0A36E211DD1AFFE00D5F648 /* Group+CoreDataClass.swift in Sources */,
 				D0025AF21DB819DE008C8A54 /* PlaceMarker.swift in Sources */,
-				D029D8391DB05A4900A79CFC /* GroupsViewController.swift in Sources */,
+				D029D8391DB05A4900A79CFC /* GroupListViewController.swift in Sources */,
 				D029D8351DB05A4900A79CFC /* AppDelegate.swift in Sources */,
 				D0A36E231DD1AFFE00D5F648 /* User+CoreDataClass.swift in Sources */,
 				D048FFAC1DC9458800822BF4 /* UserTableCell.swift in Sources */,

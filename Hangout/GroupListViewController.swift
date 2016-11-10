@@ -8,7 +8,7 @@
 
 import UIKit
 
-class GroupsViewController: UITableViewController {
+class GroupListViewController: UITableViewController {
 
     @IBOutlet var GroupTable: UITableView!
     @IBOutlet weak var AddGroupButton: UIBarButtonItem!
@@ -18,23 +18,19 @@ class GroupsViewController: UITableViewController {
     var groupList:[Group] = [Group]()
 
     override func viewDidLoad() {
-        print("ViewDidLoad()")
         super.viewDidLoad()
 
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        self.definesPresentationContext = true
+        definesPresentationContext = true
 
-        self.navigationItem.titleView = searchController.searchBar
+        navigationItem.titleView = searchController.searchBar
     }
 
     override func viewDidAppear(_ animated: Bool) {
-        print("ViewDidAppear()")
-
         getGroupData()
         tableView.reloadData()
-        print(groupList)
     }
 
     func getGroupData() {
@@ -47,6 +43,19 @@ class GroupsViewController: UITableViewController {
             print("Fetching Group data failed.")
         }
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "showGroup") {
+            let groupViewController = segue.destination as! GroupViewController
+            groupViewController.group = (sender as! GroupTableCell).group
+        }
+    }
+}
+
+
+// MARK: - TableView Functions
+
+extension GroupListViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -75,7 +84,10 @@ class GroupsViewController: UITableViewController {
     }
 }
 
-extension GroupsViewController: UISearchResultsUpdating {
+
+// MARK: - UISearchResultsUpdating
+
+extension GroupListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         let text = searchController.searchBar.text!
         filteredGroups = groupList.filter({ (i: Group) -> Bool in
@@ -93,7 +105,6 @@ extension GroupsViewController: UISearchResultsUpdating {
             return false
         })
 
-        print(filteredGroups)
         tableView.reloadData()
     }
 }
