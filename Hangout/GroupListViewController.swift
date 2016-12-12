@@ -13,6 +13,8 @@ class GroupListViewController: UITableViewController {
     @IBOutlet var GroupTable: UITableView!
     @IBOutlet weak var AddGroupButton: UIBarButtonItem!
 
+    @IBAction func unwindToGroupsListView(segue: UIStoryboardSegue) {}
+
     let searchController = UISearchController(searchResultsController: nil)
     var filteredGroups:[Group] = [Group]()
     var groupList:[Group] = [Group]()

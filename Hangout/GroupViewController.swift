@@ -6,34 +6,19 @@
 //  Copyright © 2016 Derek Vallar. All rights reserved.
 //
 
+import GooglePlaces
 import UIKit
 
 class GroupViewController: UIViewController {
 
     var group: Group!
     var hangoutList: [Hangout]!
+
     @IBOutlet weak var createAHangoutView: UIView!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchButton: UIButton!
 
-    @IBAction func SearchButton(_ sender: Any) {
-        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-
-        let hangout = Hangout(context: context)
-        hangout.name = "Firestones"
-        hangout.date = "Nov 2, 1994"
-        hangout.address = "My House"
-        hangout.group = group
-        (UIApplication.shared.delegate as! AppDelegate).saveContext()
-
-
-
-        updateHangoutData()
-    }
-
-    @IBAction func SuggestButton(_ sender: Any) {
-
-    }
-
+    @IBAction func unwindToGroupView(segue: UIStoryboardSegue) {}
 
     // MARK: - Functions
 
@@ -41,10 +26,7 @@ class GroupViewController: UIViewController {
         navigationItem.title = group.name
         navigationItem.backBarButtonItem?.title = ""
 
-        createAHangoutView.layer.shadowOffset = CGSize.init(width: 0, height: 0)
-        createAHangoutView.layer.shadowRadius = 4
-        createAHangoutView.layer.shadowOpacity = 0.25
-
+        setupViews()
         updateHangoutData()
     }
 
@@ -52,11 +34,25 @@ class GroupViewController: UIViewController {
         updateHangoutData()
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "createAHangout" {
+            let viewController = segue.destination as! EditHangoutViewController
+            viewController.group = group
+        }
+    }
+
+    func setupViews() {
+        automaticallyAdjustsScrollViewInsets = false
+        createAHangoutView.layer.shadowOffset = CGSize.init(width: 0, height: 0)
+        createAHangoutView.layer.shadowRadius = 4
+        createAHangoutView.layer.shadowOpacity = 0.25
+    }
+
     func updateHangoutData() {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
         do {
-            let groups = try context.fetch(Group.fetchRequest(group.uniqueID))
+            let groups = try context.fetch(Group.fetchRequest(group.id))
             group = groups.first!
         }
         catch {
@@ -84,5 +80,12 @@ extension GroupViewController: UITableViewDelegate, UITableViewDataSource {
 
         cell.hangout = hangoutList[indexPath.row]
         return cell
+    }
+}
+
+extension GroupViewController: RecommendationViewControllerDelegate {
+
+    func didAddPlace(place: GMSPlace) {
+
     }
 }

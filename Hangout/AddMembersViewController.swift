@@ -7,6 +7,7 @@
 //
 
 import CoreData
+import FBSDKCoreKit
 import UIKit
 
 class AddMembersViewController: UITableViewController {
@@ -17,29 +18,55 @@ class AddMembersViewController: UITableViewController {
     var filteredUsers = [User]()
     var selectedUsers = [User]()
 
-    @IBAction func DoneButton(_ sender: UIBarButtonItem) {
-        self.dismiss(animated: true, completion: nil)
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+
+    @IBAction func doneButtonAction(_ sender: Any) {
         let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         let group = Group(context: context)
         group.initData(selectedUsers)
 
         (UIApplication.shared.delegate as! AppDelegate).saveContext()
+
+        performSegue(withIdentifier: "unwindToGroupsListView", sender: sender)
     }
 
     @IBAction func CancelButton(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true, completion: nil)
     }
 
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.dimsBackgroundDuringPresentation = false
         searchController.hidesNavigationBarDuringPresentation = false
-        self.definesPresentationContext = true
+        definesPresentationContext = true
 
-        self.tableView.tableHeaderView = searchController.searchBar
+        tableView.tableHeaderView = searchController.searchBar
 
+        doneButton.isEnabled = false
+
+        if FBSDKAccessToken.current() != nil {
+            print("FB Token exists")
+            let request = FBSDKGraphRequest.init(graphPath: "me/friends", parameters: nil)
+
+            request?.start(completionHandler: {
+                (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) -> Void in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                else {
+                    print("Got Friends!")
+                    print(result)
+                }
+            })
+        }
+        else {
+            print("FB Token doesn't exists")
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -81,8 +108,11 @@ class AddMembersViewController: UITableViewController {
         }
         cell.user = user
 
-        if (cell.check ?? false) {
+        if selectedUsers.contains(cell.user) && cell.accessoryView == nil {
             cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "green_checkmark"))
+        }
+        else if !selectedUsers.contains(cell.user) && cell.accessoryView != nil {
+            cell.accessoryView = nil
         }
 
         return cell
@@ -91,19 +121,25 @@ class AddMembersViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath)! as! UserTableCell
 
-        if (cell.check == nil || cell.check! == false) {
+        if cell.accessoryView == nil {
             cell.accessoryView = UIImageView(image: #imageLiteral(resourceName: "green_checkmark"))
-            cell.check = true
 
             selectedUsers.append(cell.user)
+
+            if !doneButton.isEnabled {
+                doneButton.isEnabled = true
+            }
         }
         else {
             cell.accessoryView = nil
-            cell.check = false
 
             let user = cell.user!
             selectedUsers = selectedUsers.filter() { $0 != user }
-        }
+
+            if selectedUsers.count == 0 {
+                doneButton.isEnabled = false
+            }
+         }
 
         cell.isSelected = false
     }
@@ -117,12 +153,18 @@ extension AddMembersViewController: UISearchResultsUpdating {
                 return true
             }
 
-            if (i.username!.localizedCaseInsensitiveContains(text)) {
+            if i.username!.localizedCaseInsensitiveContains(text) {
                 return true
             }
             return false
         })
 
         tableView.reloadData()
+    }
+}
+
+extension AddMembersViewController: UISearchControllerDelegate {
+    func didPresentSearchController(_ searchController: UISearchController) {
+        searchController.searchBar.setShowsCancelButton(false, animated: false)
     }
 }

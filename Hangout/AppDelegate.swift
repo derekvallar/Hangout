@@ -23,8 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey("AIzaSyAb2iWFMbPmsKOZktL50hgYuiTIEXNfpUw")
         GMSPlacesClient.provideAPIKey("AIzaSyAb2iWFMbPmsKOZktL50hgYuiTIEXNfpUw")
 
-        FBSDKApplicationDelegate().application(application, didFinishLaunchingWithOptions: launchOptions)
-
         let userDefaults = UserDefaults.standard
         if (!userDefaults.bool(forKey: "initLaunch")) {
             userDefaults.set(true, forKey: "initLaunch")
@@ -59,11 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             saveContext()
         }
 
-        return true
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+
     }
 
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
-        return FBSDKApplicationDelegate().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

@@ -15,7 +15,7 @@ public class Group: NSManagedObject {
     func initData(_ members: [User]) {
         addToMembers(NSSet.init(array: members))
         updateDefaultName()
-        uniqueID = UUID().uuidString
+        id = UUID().uuidString
     }
 
     func updateDefaultName() {
@@ -51,7 +51,7 @@ public class Group: NSManagedObject {
 
     @nonobjc public class func fetchRequest(_ uuid: String?) -> NSFetchRequest<Group> {
         let request = NSFetchRequest<Group>(entityName: "Group")
-        request.predicate = NSPredicate(format: "uniqueID == %@", uuid!)
+        request.predicate = NSPredicate(format: "id == %@", uuid!)
         return request
     }
 }

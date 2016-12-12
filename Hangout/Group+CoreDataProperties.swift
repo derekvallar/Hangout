@@ -2,7 +2,7 @@
 //  Group+CoreDataProperties.swift
 //  Hangout
 //
-//  Created by Derek Vitaliano Vallar on 11/9/16.
+//  Created by Derek Vitaliano Vallar on 11/11/16.
 //  Copyright © 2016 Derek Vallar. All rights reserved.
 //
 
@@ -17,7 +17,7 @@ extension Group {
     }
 
     @NSManaged public var name: String?
-    @NSManaged public var uniqueID: String?
+    @NSManaged public var id: String?
     @NSManaged public var hangouts: NSSet?
     @NSManaged public var members: NSSet?
 

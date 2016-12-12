@@ -6,60 +6,77 @@
 //  Copyright © 2016 Derek Vallar. All rights reserved.
 //
 
-import GooglePlaces
+import FBSDKCoreKit
+import FBSDKLoginKit
+import SwiftyJSON
 import UIKit
 
 class SettingsViewController: UIViewController {
 
-    var resultsViewController: GMSAutocompleteResultsViewController?
-    var searchController: UISearchController?
-    var resultView: UITextView?
+    @IBOutlet weak var profilePicView: UIImageView!
+    @IBOutlet weak var loginButtonView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        resultsViewController = GMSAutocompleteResultsViewController()
-        resultsViewController?.delegate = self
+        let loginButton = FBSDKLoginButton.init()
+        loginButton.delegate = self
+        loginButton.readPermissions = ["public_profile", "email", "user_friends"]
 
-        searchController = UISearchController(searchResultsController: resultsViewController)
-        searchController?.searchResultsUpdater = resultsViewController
+        loginButtonView.addSubview(loginButton)
+        loginButton.center = loginButtonView.center
 
-        // Put the search bar in the navigation bar.
-        searchController?.searchBar.sizeToFit()
-        self.navigationItem.titleView = searchController?.searchBar
+        if FBSDKAccessToken.current() != nil {
+            let params = [
+                "type": "large"]
 
-        // When UISearchController presents the results view, present it in
-        // this view controller, not one further up the chain.
-        self.definesPresentationContext = true
+            let request = FBSDKGraphRequest.init(graphPath: "me/picture", parameters: params)
 
-        // Prevent the navigation bar from being hidden when searching.
-        searchController?.hidesNavigationBarDuringPresentation = false
+            request?.start(completionHandler: {
+                (connection: FBSDKGraphRequestConnection?, result: Any?, error: Error?) -> Void in
+                if let error = error {
+                    print(error.localizedDescription)
+                }
+                else {
+                    let json = JSON(result)
+                    print(json)
+                    let url = URL.init(fileURLWithPath: json["data"]["url"].string!)
+
+                    URLSession.shared.dataTask(with: url, completionHandler:
+                        { (data: Data?, response: URLResponse?, error: Error?) -> Void in
+                            if error != nil {
+                                print(error?.localizedDescription ?? "Error grabbing image")
+                                return
+                            }
+
+                            DispatchQueue.main.async {
+                                self.profilePicView.image = UIImage.init(data: data!)
+                            }
+                    }).resume()
+                }
+            })
+        }
     }
 }
 
-// Handle the user's selection.
-extension SettingsViewController: GMSAutocompleteResultsViewControllerDelegate {
-    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
-                           didAutocompleteWith place: GMSPlace) {
-        searchController?.isActive = false
-        // Do something with the selected place.
-        print("Place name: ", place.name)
-        print("Place address: ", place.formattedAddress ?? "")
-        print("Place attributions: ", place.attributions ?? "")
+extension SettingsViewController: FBSDKLoginButtonDelegate {
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+        if ((error) != nil) {
+            print("Login error: " + error.localizedDescription)
+        }
+        else if (result.isCancelled) {
+            print("Login was cancelled")
+        }
+        else {
+            print("Logged in!")
+        }
     }
 
-    func resultsController(_ resultsController: GMSAutocompleteResultsViewController,
-                           didFailAutocompleteWithError error: Error){
-        // TODO: handle the error.
-        print("Error: ", error.localizedDescription)
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
+
     }
 
-    // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-    }
-    
-    func didUpdateAutocompletePredictions(forResultsController resultsController: GMSAutocompleteResultsViewController) {
-        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    func loginButtonWillLogin(_ loginButton: FBSDKLoginButton!) -> Bool {
+        return true
     }
 }
